@@ -19,7 +19,7 @@
             background: white;
             padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             width: 500px;
             text-align: center;
         }
@@ -96,67 +96,67 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>🌸 Flower Gallery 🌸</h1>
+        <h1>🌸 Flower Gallery 🌸</h1>
 
-    <div class="gallery-container">
-        <button class="btn" onclick="slideLeft()">❮</button>
+        <div class="gallery-container">
+            <button class="btn" onclick="slideLeft()">❮</button>
 
-        <img id="mainImage" class="main-img">
+            <img id="mainImage" class="main-img">
 
-        <button class="btn" onclick="slideRight()">❯</button>
+            <button class="btn" onclick="slideRight()">❯</button>
+        </div>
+
+        <h2 id="title"></h2>
+        <p id="description"></p>
+        <p id="extra"></p>
+
+        <div class="gallery-preview" id="gallery-preview"></div>
+
     </div>
 
-    <h2 id="title"></h2>
-    <p id="description"></p>
-    <p id="extra"></p>
+    <script>
+        const IMAGES = [
+            { url: "rose.png", title: "Rose", description: "Symbol of love.", rating: 4.9 },
+            { url: "lotus.png", title: "Lotus", description: "National flower.", rating: 4.8 },
+            { url: "sunflower.png", title: "Sunflower", description: "Follows sun.", rating: 4.7 },
+            { url: "tulip.png", title: "Tulip", description: "Colorful flower.", rating: 4.6 },
+            { url: "jasmine.png", title: "Jasmine", description: "Sweet fragrance.", rating: 4.8 }
+        ];
 
-    <div class="gallery-preview" id="gallery-preview"></div>
+        let currentIndex = 0;
 
-</div>
+        function showImage() {
+            const img = IMAGES[currentIndex];
 
-<script>
-    const IMAGES = [
-        { url: "rose.png", title: "Rose", description: "Symbol of love.", rating: 4.9 },
-        { url: "lotus.png", title: "Lotus", description: "National flower.", rating: 4.8 },
-        { url: "sunflower.png", title: "Sunflower", description: "Follows sun.", rating: 4.7 },
-        { url: "tulip.png", title: "Tulip", description: "Colorful flower.", rating: 4.6 },
-        { url: "jasmine.png", title: "Jasmine", description: "Sweet fragrance.", rating: 4.8 }
-    ];
+            document.getElementById("mainImage").src = img.url;
+            document.getElementById("title").innerText = img.title;
+            document.getElementById("description").innerText = img.description;
+            document.getElementById("extra").innerText = "⭐ Rating: " + img.rating;
+        }
 
-    let currentIndex = 0;
+        function slideLeft() {
+            currentIndex = (currentIndex - 1 + IMAGES.length) % IMAGES.length;
+            showImage();
+        }
 
-    function showImage() {
-        const img = IMAGES[currentIndex];
+        function slideRight() {
+            currentIndex = (currentIndex + 1) % IMAGES.length;
+            showImage();
+        }
 
-        document.getElementById("mainImage").src = img.url;
-        document.getElementById("title").innerText = img.title;
-        document.getElementById("description").innerText = img.description;
-        document.getElementById("extra").innerText = "⭐ Rating: " + img.rating;
-    }
+        function createPreview() {
+            const container = document.getElementById("gallery-preview");
 
-    function slideLeft() {
-        currentIndex = (currentIndex - 1 + IMAGES.length) % IMAGES.length;
+            IMAGES.forEach((img, i) => {
+                container.innerHTML += `<img src="${img.url}" class="preview-img" onclick="currentIndex=${i}; showImage()">`;
+            });
+        }
+
+        createPreview();
         showImage();
-    }
-
-    function slideRight() {
-        currentIndex = (currentIndex + 1) % IMAGES.length;
-        showImage();
-    }
-
-    function createPreview() {
-        const container = document.getElementById("gallery-preview");
-
-        IMAGES.forEach((img, i) => {
-            container.innerHTML += `<img src="${img.url}" class="preview-img" onclick="currentIndex=${i}; showImage()">`;
-        });
-    }
-
-    createPreview();
-    showImage();
-</script>
+    </script>
 
 </body>
 
